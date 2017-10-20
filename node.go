@@ -1,4 +1,4 @@
-package constdp
+package node
 
 import (
 	"simplex/rng"
