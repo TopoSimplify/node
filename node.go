@@ -9,8 +9,7 @@ import (
 	"github.com/intdxdt/mbr"
 )
 
-
-//hull node
+//Node Type
 type Node struct {
 	Polyline *pln.Polyline
 	Range    *rng.Range
@@ -18,7 +17,7 @@ type Node struct {
 	Instance lnr.SimpleAlgorithm
 }
 
-//New Hull Node
+//New Node
 func New(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	var pt *geom.Point
 	var chull []*geom.Point
@@ -39,32 +38,32 @@ func New(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	}
 }
 
-//implements igeom interface
-func (h *Node) Geometry() geom.Geometry {
-	return h.Geom
+//Implements igeom interface
+func (self *Node) Geometry() geom.Geometry {
+	return self.Geom
 }
 
-//implements bbox interface
-func (h *Node) BBox() *mbr.MBR {
-	return h.Geom.BBox()
-}
-
-//stringer interface
-func (h *Node) String() string {
-	return h.Geom.WKT()
+//Implements bbox interface
+func (self *Node) BBox() *mbr.MBR {
+	return self.Geom.BBox()
 }
 
 //stringer interface
-func (h *Node) Coordinates() []*geom.Point {
-	return h.Polyline.Coordinates
+func (self *Node) String() string {
+	return self.Geom.WKT()
+}
+
+//stringer interface
+func (self *Node) Coordinates() []*geom.Point {
+	return self.Polyline.Coordinates
 }
 
 //as segment
-func (h *Node) Segment() *seg.Seg {
-	return h.Polyline.Segment(h.Range)
+func (self *Node) Segment() *seg.Seg {
+	return self.Polyline.Segment(self.Range)
 }
 
 //as segment
-func (h *Node) SubPolyline() *pln.Polyline {
-	return h.Polyline.SubPolyline(h.Range)
+func (self *Node) SubPolyline() *pln.Polyline {
+	return self.Polyline.SubPolyline(self.Range)
 }

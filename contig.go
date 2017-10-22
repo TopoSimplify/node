@@ -1,7 +1,6 @@
 package node
 
-
-//checks for node contiguity
+//Checks if two nodes: nopde `a` and `b` are contiguous
 // returns  bool (intersects), bool(is contig at vertex), int (number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
 	//@formatter:off
