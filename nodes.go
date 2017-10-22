@@ -59,9 +59,7 @@ func (self *Nodes) Push(v *Node) *Nodes {
 }
 
 func (self *Nodes) Extend(values ...*Node) *Nodes {
-	for _, h := range values {
-		self.list = append(self.list, h)
-	}
+	self.list = append(self.list, values...)
 	return self
 }
 
