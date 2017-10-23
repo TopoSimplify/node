@@ -14,7 +14,7 @@ type Node struct {
 	Polyline *pln.Polyline
 	Range    *rng.Range
 	Geom     geom.Geometry
-	Instance lnr.SimpleAlgorithm
+	Instance lnr.Linegen
 }
 
 //New Node
