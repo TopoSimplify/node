@@ -4,8 +4,6 @@ package node
 // returns  bool (intersects), bool(is contig at vertex), int (number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
 	//@formatter:off
-	var pln         = a.Polyline
-	var coords      = pln.Coordinates
 	var ga          = a.Geom
 	var gb          = b.Geom
 	var contig      = false
@@ -15,11 +13,8 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 	if bln {
 		var interpts = ga.Intersection(gb)
 
-		var ai_pt = coords[a.Range.I()]
-		var aj_pt = coords[a.Range.J()]
-
-		var bi_pt = coords[b.Range.I()]
-		var bj_pt = coords[b.Range.J()]
+		var ai_pt, aj_pt = a.SegmentPoints()
+		var bi_pt, bj_pt = b.SegmentPoints()
 
 		inter_count = len(interpts)
 

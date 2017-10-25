@@ -42,7 +42,8 @@ func TestCollapsible(t *testing.T) {
 				var coords = geom.NewLineStringFromWKT(wkt).Coordinates()
 				var poly = pln.New(coords)
 				var n = len(coords) - 1
-				var ha, hb = New(poly, rng.NewRange(0, k), fn), New(poly, rng.NewRange(k, n), fn)
+				var rng_a , rng_b = rng.NewRange(0, k), rng.NewRange(k, n)
+				var ha, hb = New(poly.SubCoordinates(rng_a), rng_a, fn), New(poly.SubCoordinates(rng_b), rng_b, fn)
 				g.Assert(hb.Collapsible(ha)).Equal(bln)
 			}
 		})
@@ -54,11 +55,11 @@ func TestCollapsible(t *testing.T) {
 			n := len(coords) - 1
 			polyline := pln.New(coords)
 
-			h1 := New(polyline, rng.NewRange(0, k1), fn)
-			h2 := New(polyline, rng.NewRange(k1, k2), fn)
-			h3 := New(polyline, rng.NewRange(k2, k3), fn)
-			h4 := New(polyline, rng.NewRange(k3, k4), fn)
-			h5 := New(polyline, rng.NewRange(k4, n), fn)
+			h1 := New(polyline.SubCoordinates(rng.NewRange(0, k1)), rng.NewRange(0, k1) , fn)
+			h2 := New(polyline.SubCoordinates(rng.NewRange(k1, k2) ), rng.NewRange(k1, k2)   , fn)
+			h3 := New(polyline.SubCoordinates(rng.NewRange(k2, k3) ), rng.NewRange(k2, k3)   , fn)
+			h4 := New(polyline.SubCoordinates(rng.NewRange(k3, k4) ), rng.NewRange(k3, k4)   , fn)
+			h5 := New(polyline.SubCoordinates(rng.NewRange(k4, n)  ), rng.NewRange(k4, n)    , fn)
 
 			hulls := [][2]*Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
 			for _, o := range hulls {

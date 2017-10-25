@@ -28,7 +28,8 @@ func create_hulls(indxs [][]int, coords []*geom.Point) []*Node {
 	poly := pln.New(coords)
 	hulls := make([]*Node, 0)
 	for _, o := range indxs {
-		hulls = append(hulls, New(poly, rng.NewRange(o[0], o[1]), hullGeom))
+		r := rng.NewRange(o[0], o[1])
+		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom))
 	}
 	return hulls
 }

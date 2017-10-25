@@ -18,21 +18,15 @@ type Node struct {
 }
 
 //New Node
-func New(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
-	var pt *geom.Point
+func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	var chull []*geom.Point
-	var coords = make([]*geom.Point, 0, rng.Size()+1)
-
-	for _, i := range rng.Stride() {
-		pt = polyline.Coordinates[i].Clone()
-		pt[geom.Z] = float64(i)
-		coords = append(coords, pt)
-	}
-
+	var n = len(coordinates)
+	var coords = make([]*geom.Point, n, n)
+	copy(coords, coordinates)
 	chull = geom.ConvexHull(coords, false)
 
 	return &Node{
-		Polyline: polyline,
+		Polyline: pln.New(coordinates),
 		Range:    rng,
 		Geom:     gfn(chull),
 	}
@@ -58,12 +52,24 @@ func (self *Node) Coordinates() []*geom.Point {
 	return self.Polyline.Coordinates
 }
 
-//as segment
-func (self *Node) Segment() *seg.Seg {
-	return self.Polyline.Segment(self.Range)
+//first point in coordinates
+func (self *Node) First() *geom.Point {
+	return self.Polyline.Coordinates[0]
+}
+
+//last point in coordinates
+func (self *Node) Last() *geom.Point {
+	var n = len(self.Polyline.Coordinates)
+	return self.Polyline.Coordinates[n-1]
 }
 
 //as segment
-func (self *Node) SubPolyline() *pln.Polyline {
-	return self.Polyline.SubPolyline(self.Range)
+func (self *Node) Segment() *seg.Seg {
+	var a, b = self.SegmentPoints()
+	return seg.NewSeg(a, b, self.Range.I(), self.Range.J())
+}
+
+//segment points
+func (self *Node) SegmentPoints() (*geom.Point, *geom.Point) {
+	return self.First(), self.Last()
 }
