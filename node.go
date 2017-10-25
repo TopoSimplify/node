@@ -32,6 +32,11 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	}
 }
 
+//New Node
+func NewFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
+	return New(polyline.SubCoordinates(rng), rng, gfn)
+}
+
 //Implements igeom interface
 func (self *Node) Geometry() geom.Geometry {
 	return self.Geom

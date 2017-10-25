@@ -12,13 +12,6 @@ func (self *Node) Collapsible(other *Node) bool {
 		return true
 	}
 
-	//var pln = self.Coordinates()
-	//var pt_at = func(i int) *geom.Point {
-	//	return geom.NewPoint(pln[i][:2])
-	//}
-
-	//var ra = self.Range
-	//var rb = other.Range
 	var ai, aj = self.SegmentPoints()
 	var bi, bj = other.SegmentPoints()
 
