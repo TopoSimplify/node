@@ -5,8 +5,8 @@ import (
 	"simplex/seg"
 	"simplex/pln"
 	"simplex/lnr"
-	"github.com/intdxdt/geom"
 	"github.com/intdxdt/mbr"
+	"github.com/intdxdt/geom"
 )
 
 //Node Type
@@ -54,7 +54,8 @@ func (self *Node) String() string {
 
 //stringer interface
 func (self *Node) Coordinates() []*geom.Point {
-	return self.Polyline.Coordinates
+	var n = self.Polyline.Len()
+	return self.Polyline.Coordinates[:n:n]
 }
 
 //first point in coordinates
@@ -64,8 +65,7 @@ func (self *Node) First() *geom.Point {
 
 //last point in coordinates
 func (self *Node) Last() *geom.Point {
-	var n = len(self.Polyline.Coordinates)
-	return self.Polyline.Coordinates[n-1]
+	return self.Polyline.Coordinates[self.Polyline.Len()-1]
 }
 
 //as segment

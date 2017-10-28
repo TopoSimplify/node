@@ -1,32 +1,32 @@
 package node
 
 //Checks if two nodes: nopde `a` and `b` are contiguous
-// returns  bool (intersects), bool(is contig at vertex), int (number of intersections)
+// returns  bool(intersects), bool(is contig at vertex), int(number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
 	//@formatter:off
 	var ga          = a.Geom
 	var gb          = b.Geom
 	var contig      = false
-	var inter_count = 0
+	var interCount = 0
 
 	var bln = ga.Intersects(gb)
 	if bln {
 		var interpts = ga.Intersection(gb)
 
-		var ai_pt, aj_pt = a.SegmentPoints()
-		var bi_pt, bj_pt = b.SegmentPoints()
+		var aiPt, ajPt = a.SegmentPoints()
+		var biPt, bjPt = b.SegmentPoints()
 
-		inter_count = len(interpts)
+		interCount = len(interpts)
 
 		for _, pt := range interpts {
-			var bln_aseg = pt.Equals2D(ai_pt) || pt.Equals2D(aj_pt)
-			var bln_bseg = pt.Equals2D(bi_pt) || pt.Equals2D(bj_pt)
+			var blnAseg = pt.Equals2D(aiPt) || pt.Equals2D(ajPt)
+			var blnBseg = pt.Equals2D(biPt) || pt.Equals2D(bjPt)
 
-			if bln_aseg || bln_bseg {
-				contig = aj_pt.Equals2D(bi_pt) ||
-					     aj_pt.Equals2D(bj_pt) ||
-					     ai_pt.Equals2D(bj_pt) ||
-					     ai_pt.Equals2D(bi_pt)
+			if blnAseg || blnBseg {
+				contig = ajPt.Equals2D(biPt) ||
+					     ajPt.Equals2D(bjPt) ||
+					     aiPt.Equals2D(bjPt) ||
+					     aiPt.Equals2D(biPt)
 			}
 
 			if contig {
@@ -35,7 +35,7 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 		}
 	}
 
-	return bln, contig, inter_count
+	return bln, contig, interCount
 }
 
 

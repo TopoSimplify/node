@@ -2,8 +2,8 @@ package node
 
 import (
 	"testing"
-	"simplex/rng"
 	"simplex/pln"
+	"simplex/rng"
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
 )
