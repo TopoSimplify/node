@@ -74,6 +74,12 @@ func (self *Node) Segment() *seg.Seg {
 	return seg.NewSeg(a, b, self.Range.I(), self.Range.J())
 }
 
+//hull segment as polyline
+func (self *Node) SegmentAsPolyline() *pln.Polyline {
+	var a, b = self.SegmentPoints()
+	return pln.New([]*geom.Point{a, b})
+}
+
 //segment points
 func (self *Node) SegmentPoints() (*geom.Point, *geom.Point) {
 	return self.First(), self.Last()

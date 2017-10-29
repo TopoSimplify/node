@@ -15,7 +15,7 @@ func TestHullSeg(t *testing.T) {
 		polyline := pln.New(coords)
 		hulls := make([]*Node, 0)
 		for _, r := range ranges {
-			i, j := r[0], r[len(r)-1]
+			var i, j = r[0], r[len(r)-1]
 			h := NewFromPolyline(polyline, rng.NewRange(i, j), hullGeom)
 			hulls = append(hulls, h)
 		}
@@ -30,8 +30,8 @@ func TestHullSeg(t *testing.T) {
 			var hulls = createHulls(ranges, coords)
 
 			for i, r := range ranges {
-				s := hulls[i].Segment()
-				a, b := coords[r[0]][:2], coords[r[1]][:2]
+				var s = hulls[i].Segment()
+				var a, b = coords[r[0]][:2], coords[r[1]][:2]
 				g.Assert(r).Equal(s.Range().AsSlice())
 				g.Assert(s.A[:2]).Equal(a)
 				g.Assert(s.B[:2]).Equal(b)
