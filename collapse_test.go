@@ -42,7 +42,7 @@ func TestCollapsible(t *testing.T) {
 				var coords = geom.NewLineStringFromWKT(wkt).Coordinates()
 				var poly = pln.New(coords)
 				var n = len(coords) - 1
-				var rng_a , rng_b = rng.NewRange(0, k), rng.NewRange(k, n)
+				var rng_a, rng_b = rng.NewRange(0, k), rng.NewRange(k, n)
 				var ha, hb = NewFromPolyline(poly, rng_a, fn), NewFromPolyline(poly, rng_b, fn)
 				g.Assert(hb.Collapsible(ha)).Equal(bln)
 			}
@@ -71,6 +71,14 @@ func TestCollapsible(t *testing.T) {
 			g.Assert(hb.Collapsible(ha)).IsFalse()
 			//if not contiguous should be eql
 			g.Assert(h5.Collapsible(h3)).IsTrue()
+
+		})
+
+		g.It("should test collapsibility", func() {
+			//checks if score is valid at threshold of constrained dp
+			var coords = linearCoords("LINESTRING ( 960 840, 980 840, 980 880, 1020 900, 1080 880, 1120 860, 1160 800, 1160 760, 1140 700, 1080 700, 1040 720, 1060 760, 1120 800, 1080 840, 1020 820, 940 760 )")
+			var hulls = createHulls([][]int{{0, 1}, {1, 6}, {6, 8}, {8, 10}, {10, 12}, {12, len(coords) - 1}}, coords)
+			g.Assert(hulls[0].Collapsible(hulls[1])).IsTrue()
 
 		})
 	})

@@ -3,8 +3,8 @@ package node
 import (
 	"sort"
 	"github.com/intdxdt/cmp"
-	"github.com/intdxdt/deque"
 	"github.com/intdxdt/sset"
+	"github.com/intdxdt/deque"
 )
 
 type Nodes struct {
