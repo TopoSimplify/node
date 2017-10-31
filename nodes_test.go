@@ -14,6 +14,7 @@ func TestNodes(t *testing.T) {
 			var hulls = createHulls([][]int{{8, 10}, {10, 12}, {0, 2}, {2, 6}, {6, 8}, {12, len(coords) - 1}}, coords)
 			var ns = NewNodes(len(hulls))
 			for _, n := range hulls {
+				g.Assert(n.Id()).Equal(n.id)
 				ns.Push(n)
 			}
 			ns.Sort()

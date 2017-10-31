@@ -7,10 +7,12 @@ import (
 	"simplex/lnr"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
+	"github.com/intdxdt/random"
 )
 
 //Node Type
 type Node struct {
+	id       string
 	Polyline *pln.Polyline
 	Range    *rng.Range
 	Geom     geom.Geometry
@@ -26,6 +28,7 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	chull = geom.ConvexHull(coords, false)
 
 	return &Node{
+		id      : random.String(8),
 		Polyline: pln.New(coordinates),
 		Range:    rng,
 		Geom:     gfn(chull),
@@ -35,6 +38,11 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn) *Node {
 //New Node
 func NewFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	return New(polyline.SubCoordinates(rng), rng, gfn)
+}
+
+//Id
+func (self *Node) Id() string  {
+	return self.id
 }
 
 //Implements igeom interface
