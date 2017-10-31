@@ -27,12 +27,12 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn) *Node {
 	copy(coords, coordinates)
 	chull = geom.ConvexHull(coords, false)
 
-	return &Node{
-		id      : random.String(8),
+	var nd = &Node{
 		Polyline: pln.New(coordinates),
 		Range:    rng,
 		Geom:     gfn(chull),
 	}
+	return nd.SetId(random.String(8))
 }
 
 //New Node
@@ -41,8 +41,14 @@ func NewFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn
 }
 
 //Id
-func (self *Node) Id() string  {
+func (self *Node) Id() string {
 	return self.id
+}
+
+//Set id
+func (self *Node) SetId(key string) *Node {
+	self.id = key
+	return self
 }
 
 //Implements igeom interface
