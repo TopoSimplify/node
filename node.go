@@ -25,6 +25,7 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn, nodeId 
     var chull []*geom.Point
     var n = len(coordinates)
     var coords = make([]*geom.Point, n, n)
+
     copy(coords, coordinates)
     chull = geom.ConvexHull(coords, false)
 

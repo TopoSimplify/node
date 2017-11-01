@@ -41,13 +41,11 @@ func (self *Nodes) DataView() []*Node {
 	return self.list
 }
 
-//Sort a slice of hull nodes
 func (self *Nodes) Sort() *Nodes {
 	sort.Sort(self)
 	return self
 }
 
-//Reverse Sort a slice of hull nodes
 func (self *Nodes) Reverse() *Nodes {
 	sort.Sort(sort.Reverse(self))
 	return self
