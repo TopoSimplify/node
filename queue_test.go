@@ -19,7 +19,7 @@ func TestQueue(t *testing.T) {
             queue.Append(hulls[3])
             queue.Append(hulls[4])
             queue.Append(hulls[5])
-
+            g.Assert(queue.Size()).Equal(len(hulls))
             g.Assert(queue.First().Range.AsArray()).Equal([2]int{0, 2})
             g.Assert(queue.Last().Range.AsArray()).Equal([2]int{12, len(coords) - 1})
             g.Assert(queue.PopLeft().Range.AsArray()).Equal([2]int{0, 2})
@@ -28,8 +28,8 @@ func TestQueue(t *testing.T) {
             g.Assert(queue.PopLeft().Range.AsArray()).Equal([2]int{2, 6})
             g.Assert(queue.Pop().Range.AsArray()).Equal([2]int{12, len(coords) - 1})
             g.Assert(queue.Last().Range.AsArray()).Equal([2]int{10, 12})
-            g.Assert(queue.Pop().Range.AsArray()).Equal([2]int{10, 12})
-            g.Assert(queue.Pop().Range.AsArray()).Equal([2]int{8, 10})
+
+            g.Assert(queue.Clear().Size()).Equal(0)
 
         })
     })

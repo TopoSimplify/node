@@ -4,6 +4,7 @@ import (
 	"simplex/pln"
 	"simplex/rng"
 	"github.com/intdxdt/geom"
+	"github.com/intdxdt/random"
 )
 
 //hull geom
@@ -29,7 +30,7 @@ func createHulls(indxs [][]int, coords []*geom.Point) []*Node {
 	hulls := make([]*Node, 0)
 	for _, o := range indxs {
 		r := rng.NewRange(o[0], o[1])
-		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom))
+		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom, random.String(4)))
 	}
 	return hulls
 }

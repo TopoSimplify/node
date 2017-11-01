@@ -4,6 +4,7 @@ import (
     "sync"
     "github.com/intdxdt/deque"
 )
+
 //@formatter:off
 
 type Queue struct {
@@ -35,6 +36,17 @@ func (q *Queue) Pop() *Node {
 func (q *Queue) PopLeft() *Node {
     q.Lock(); defer q.Unlock()
     return q.que.PopLeft().(*Node)
+}
+
+func (q *Queue) Clear() *Queue {
+    q.Lock(); defer q.Unlock()
+    q.que.Clear()
+    return q
+}
+
+func (q *Queue) Size() int {
+    q.RLock(); defer q.RUnlock()
+    return q.que.Len()
 }
 
 func (q *Queue) First() *Node {
