@@ -15,6 +15,10 @@ func TestNodes(t *testing.T) {
 			var ns = NewNodes(len(hulls))
 			for _, n := range hulls {
 				g.Assert(n.Id()).Equal(n.id)
+				ida, idb := n.SubNodeIds()
+				g.Assert(n.Id()).Equal(n.id)
+				g.Assert(ida).Equal(n.id + "/a")
+				g.Assert(idb).Equal(n.id + "/b")
 				ns.Push(n)
 			}
 			ns.Sort()
