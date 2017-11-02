@@ -17,13 +17,10 @@ func TestIsContiguous(t *testing.T) {
 			g.Assert(contig).IsTrue()
 			g.Assert(n).Equal(1)
 
-			var nodes = NewNodes()
-			for _, n := range hulls[4:] {
-				nodes.Push(n)
-			}
-			nodes.Extend(hulls[0],hulls[1],hulls[2], hulls[3])
+			var nodes = hulls[4:len(hulls): len(hulls)]
+			nodes = append(nodes, hulls[0], hulls[1], hulls[2], hulls[3])
 
-			var prv, nxt  = Neighbours(hulls[0], nodes)
+			var prv, nxt = Neighbours(hulls[0], nodes)
 			g.Assert(prv == nil).IsTrue()
 			g.Assert(nxt != nil).IsTrue()
 			g.Assert(nxt.Range.AsArray()).Equal([2]int{2, 6})
