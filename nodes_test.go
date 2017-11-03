@@ -31,6 +31,12 @@ func TestNodes(t *testing.T) {
 			g.Assert(n.Range.AsArray()).Equal([2]int{0, 2})
 			g.Assert(len(ns)).Equal(len(hulls) - 1)
 
+			var ptset = Nodes(ns).AsPointSet()
+			g.Assert(ptset.Values()).Equal([]interface{}{2, 6, 8, 10, 12, 15})
+			Clear(&ns)
+
+			g.Assert(len(ns)).Equal(0)
+
 		})
 	})
 }

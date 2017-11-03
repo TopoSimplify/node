@@ -7,6 +7,7 @@ import (
 
 type Nodes []*Node
 
+
 func (self Nodes) Len() int {
 	return len(self)
 }
@@ -19,6 +20,13 @@ func (self Nodes) Less(i, j int) bool {
 	return self[i].Range.I() < self[j].Range.I()
 }
 
+func (self Nodes) AsPointSet() *sset.SSet {
+	var set = sset.NewSSet(cmp.Int)
+	for _, o := range self {
+		set.Extend(o.Range.I(), o.Range.J())
+	}
+	return set
+}
 
 func Pop(self *[]*Node) []*Node {
 	var nodes = *self
@@ -30,15 +38,12 @@ func Pop(self *[]*Node) []*Node {
 	return nodes
 }
 
-func (self Nodes) IsEmpty() bool {
-	return self.Len() == 0
-}
-
-
-func (self Nodes) AsPointSet() *sset.SSet {
-	var set = sset.NewSSet(cmp.Int)
-	for _, o := range self {
-		set.Extend(o.Range.I(), o.Range.J())
+func Clear(self *[]*Node) []*Node{
+	var nodes = *self
+	for i := range nodes {
+		nodes[i] = nil
 	}
-	return set
+	*self = nodes[:0]
+	return nodes
 }
+
