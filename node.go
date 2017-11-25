@@ -103,7 +103,7 @@ func (self *Node) Last() *geom.Point {
 //as segment
 func (self *Node) Segment() *seg.Seg {
 	var a, b = self.SegmentPoints()
-	return seg.NewSeg(a, b, self.Range.I(), self.Range.J())
+	return seg.NewSeg(a, b, self.Range.I, self.Range.J)
 }
 
 //hull segment as polyline

@@ -17,13 +17,13 @@ func (self Nodes) Swap(i, j int) {
 }
 
 func (self Nodes) Less(i, j int) bool {
-	return self[i].Range.I() < self[j].Range.I()
+	return self[i].Range.I < self[j].Range.I
 }
 
 func (self Nodes) AsPointSet() *sset.SSet {
 	var set = sset.NewSSet(cmp.Int)
 	for _, o := range self {
-		set.Extend(o.Range.I(), o.Range.J())
+		set.Extend(o.Range.I, o.Range.J)
 	}
 	return set
 }

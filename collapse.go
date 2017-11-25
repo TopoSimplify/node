@@ -11,6 +11,11 @@ func (self *Node) Collapsible(other *Node) bool {
 	if self.Range.Size() == 1 {
 		return true
 	}
+	//or hull can be a linear for
+	//colinear boundaries where self.range.size > 1
+	if 	_, ok := self.Geom.(*geom.LineString); ok {
+		return true
+	}
 
 	var ai, aj = self.SegmentPoints()
 	var bi, bj = other.SegmentPoints()
@@ -28,6 +33,8 @@ func (self *Node) Collapsible(other *Node) bool {
 	if c.Equals2D(t) {
 		t = bi
 	}
-	var ply = self.Geom.(*geom.Polygon)
-	return !ply.Shell.PointCompletelyInRing(t)
+	if ply, ok := self.Geom.(*geom.Polygon); ok {
+		return !ply.Shell.PointCompletelyInRing(t)
+	}
+	panic("unimplemented : hull type is handled")
 }

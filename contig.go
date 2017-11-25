@@ -42,12 +42,12 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 //Find neibours of node (prev , next)
 func Neighbours(hull *Node, neighbs []*Node) (*Node, *Node) {
 	var prev, nxt *Node
-	var i, j = hull.Range.I(), hull.Range.J()
+	var i, j = hull.Range.I, hull.Range.J
 	for _, h := range neighbs {
 		if h != hull {
-			if i == h.Range.J() {
+			if i == h.Range.J {
 				prev = h
-			} else if j == h.Range.I() {
+			} else if j == h.Range.I {
 				nxt = h
 			}
 		}
