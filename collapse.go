@@ -13,7 +13,7 @@ func (self *Node) Collapsible(other *Node) bool {
 	}
 	//or hull can be a linear for
 	//colinear boundaries where self.range.size > 1
-	if 	_, ok := self.Geom.(*geom.LineString); ok {
+	if self.Geom.Type().IsLineString() {
 		return true
 	}
 

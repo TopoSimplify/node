@@ -34,3 +34,9 @@ func createHulls(indxs [][]int, coords []*geom.Point) []*Node {
 	}
 	return hulls
 }
+
+//New Node
+func newNodeFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
+	return New(polyline.SubCoordinates(rng), rng, gfn)
+}
+

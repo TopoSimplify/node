@@ -48,10 +48,6 @@ func New(coordinates []*geom.Point, rng *rng.Range, gfn geom.GeometryFn, nodeId 
 	return nd.SetId(id)
 }
 
-//New Node
-func NewFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
-	return New(polyline.SubCoordinates(rng), rng, gfn)
-}
 
 //Id
 func (self *Node) Id() string {
