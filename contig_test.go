@@ -1,8 +1,8 @@
 package node
 
 import (
-	"github.com/franela/goblin"
 	"testing"
+	"github.com/franela/goblin"
 )
 
 func TestIsContiguous(t *testing.T) {

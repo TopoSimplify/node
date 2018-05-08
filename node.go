@@ -1,14 +1,14 @@
 package node
 
 import (
-	"simplex/rng"
-	"simplex/seg"
-	"simplex/pln"
-	"simplex/lnr"
+	"fmt"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
+	"github.com/TopoSimplify/rng"
+	"github.com/TopoSimplify/seg"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/lnr"
 	"github.com/intdxdt/random"
-	"fmt"
 )
 
 type NodeQueue interface {

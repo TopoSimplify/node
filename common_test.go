@@ -1,10 +1,10 @@
 package node
 
 import (
-	"simplex/pln"
-	"simplex/rng"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/random"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
 )
 
 //hull geom

@@ -2,8 +2,8 @@ package node
 
 import (
 	"testing"
-	"simplex/pln"
-	"simplex/rng"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/geom"
 	"github.com/franela/goblin"
 )
