@@ -12,11 +12,11 @@ func TestHullSeg(t *testing.T) {
 	var g = goblin.Goblin(t)
 
 	var createHulls = func(ranges [][]int, coords []geom.Point) []*Node {
-		polyline := pln.New(coords)
-		hulls := make([]*Node, 0)
+		var polyline = pln.New(coords)
+		var hulls    = make([]*Node, 0)
 		for _, r := range ranges {
 			var i, j = r[0], r[len(r)-1]
-			h := newNodeFromPolyline(polyline, rng.NewRange(i, j), hullGeom)
+			h := newNodeFromPolyline(polyline, rng.Range(i, j), hullGeom)
 			hulls = append(hulls, h)
 		}
 		return hulls
@@ -40,9 +40,9 @@ func TestHullSeg(t *testing.T) {
 				var cs = hulls[i].Coordinates()
 				cs = append(cs, cs[0])
 				g.Assert(hulls[i].Coordinates()).Equal(hulls[i].Polyline.Coordinates)
-				g.Assert(hulls[i].String()).Equal(hulls[i].Geom.WKT())
-				g.Assert(hulls[i].Geom).Equal(hulls[i].Geometry())
-				g.Assert(hulls[i].Geom.BBox()).Equal(hulls[i].BBox())
+				g.Assert(hulls[i].String()).Equal(hulls[i].Geometry.WKT())
+				g.Assert(hulls[i].Geometry).Equal(hulls[i].Geometry)
+				g.Assert(hulls[i].Geometry.BBox()).Equal(hulls[i].BBox())
 			}
 		})
 	})

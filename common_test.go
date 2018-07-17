@@ -29,14 +29,14 @@ func createHulls(indxs [][]int, coords []geom.Point) []*Node {
 	poly := pln.New(coords)
 	hulls := make([]*Node, 0)
 	for _, o := range indxs {
-		r := rng.NewRange(o[0], o[1])
+		r := rng.Range(o[0], o[1])
 		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom, random.String(4)))
 	}
 	return hulls
 }
 
 //New Node
-func newNodeFromPolyline(polyline *pln.Polyline, rng *rng.Range, gfn geom.GeometryFn) *Node {
-	return New(polyline.SubCoordinates(rng), rng, gfn)
+func newNodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) *Node {
+	return New(polyline.SubCoordinates(rng), rng, geomFn)
 }
 

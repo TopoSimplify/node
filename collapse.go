@@ -13,7 +13,7 @@ func (self *Node) Collapsible(other *Node) bool {
 	}
 	//or hull can be a linear for
 	//colinear boundaries where self.range.size > 1
-	if self.Geom.Type().IsLineString() {
+	if self.Geometry.Type().IsLineString() {
 		return true
 	}
 
@@ -33,7 +33,7 @@ func (self *Node) Collapsible(other *Node) bool {
 	if c.Equals2D(t) {
 		t = &bi
 	}
-	if ply, ok := self.Geom.(*geom.Polygon); ok {
+	if ply, ok := self.Geometry.(*geom.Polygon); ok {
 		return !ply.Shell.PointCompletelyInRing(t)
 	}
 	panic("unimplemented : hull type is handled")

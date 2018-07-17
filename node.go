@@ -4,11 +4,11 @@ import (
 	"fmt"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
+	"github.com/intdxdt/random"
 	"github.com/TopoSimplify/rng"
 	"github.com/TopoSimplify/seg"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
-	"github.com/intdxdt/random"
 )
 
 type NodeQueue interface {
@@ -19,13 +19,13 @@ type NodeQueue interface {
 type Node struct {
 	id       string
 	Polyline *pln.Polyline
-	Range    *rng.Range
-	Geom     geom.Geometry
+	Range    rng.Rng
+	Geometry geom.Geometry
 	Instance lnr.Linegen
 }
 
 //New Node
-func New(coordinates []geom.Point, rng *rng.Range, gfn geom.GeometryFn, nodeId ...string) *Node {
+func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) *Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, n, n)
@@ -36,7 +36,7 @@ func New(coordinates []geom.Point, rng *rng.Range, gfn geom.GeometryFn, nodeId .
 	var nd = &Node{
 		Polyline: pln.New(coordinates),
 		Range:    rng,
-		Geom:     gfn(chull),
+		Geometry: geomFn(chull),
 	}
 
 	var id string
@@ -65,19 +65,15 @@ func (self *Node) SetId(key string) *Node {
 	return self
 }
 
-//Implements igeom interface
-func (self *Node) Geometry() geom.Geometry {
-	return self.Geom
-}
 
 //Implements bbox interface
 func (self *Node) BBox() *mbr.MBR {
-	return self.Geom.BBox()
+	return self.Geometry.BBox()
 }
 
 //stringer interface
 func (self *Node) String() string {
-	return self.Geom.WKT()
+	return self.Geometry.WKT()
 }
 
 //stringer interface
