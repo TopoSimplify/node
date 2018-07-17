@@ -28,8 +28,10 @@ type Node struct {
 func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) *Node {
 	var chull []geom.Point
 	var n = len(coordinates)
-	var coords = make([]geom.Point, n, n)
-	copy(coords, coordinates)
+	var coords = make([]geom.Point, 0, n)
+	for i := range coordinates {
+		coords = append(coords, coordinates[i])
+	}
 
 	chull = geom.ConvexHull(coords, false)
 
@@ -48,7 +50,6 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId .
 	return nd.SetId(id)
 }
 
-
 //Id
 func (self *Node) Id() string {
 	return self.id
@@ -64,7 +65,6 @@ func (self *Node) SetId(key string) *Node {
 	self.id = key
 	return self
 }
-
 
 //Implements bbox interface
 func (self *Node) BBox() *mbr.MBR {
