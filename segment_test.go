@@ -11,7 +11,7 @@ import (
 func TestHullSeg(t *testing.T) {
 	var g = goblin.Goblin(t)
 
-	var createHulls = func(ranges [][]int, coords []*geom.Point) []*Node {
+	var createHulls = func(ranges [][]int, coords []geom.Point) []*Node {
 		polyline := pln.New(coords)
 		hulls := make([]*Node, 0)
 		for _, r := range ranges {
@@ -36,7 +36,7 @@ func TestHullSeg(t *testing.T) {
 				g.Assert(s.A[:2]).Equal(a)
 				g.Assert(s.B[:2]).Equal(b)
 
-				g.Assert([]*geom.Point{s.A, s.B}).Equal(hulls[i].SegmentAsPolyline().Coordinates)
+				g.Assert([]geom.Point{*s.A, *s.B}).Equal(hulls[i].SegmentAsPolyline().Coordinates)
 				var cs = hulls[i].Coordinates()
 				cs = append(cs, cs[0])
 				g.Assert(hulls[i].Coordinates()).Equal(hulls[i].Polyline.Coordinates)
