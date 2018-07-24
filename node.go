@@ -20,6 +20,7 @@ type Node struct {
 	id       string
 	Polyline *pln.Polyline
 	Range    rng.Rng
+	MBR      mbr.MBR
 	Geometry geom.Geometry
 	Instance lnr.Linegen
 }
@@ -34,11 +35,13 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId .
 	}
 
 	chull = geom.ConvexHull(coords, false)
+	var g = geomFn(chull)
 
 	var nd = &Node{
 		Polyline: pln.New(coordinates),
 		Range:    rng,
-		Geometry: geomFn(chull),
+		MBR:      g.Bounds(),
+		Geometry: g,
 	}
 
 	var id string

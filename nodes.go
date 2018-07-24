@@ -3,6 +3,7 @@ package node
 import (
 	"github.com/intdxdt/cmp"
 	"github.com/intdxdt/sset"
+	"github.com/intdxdt/rtree"
 )
 
 type Nodes []*Node
@@ -19,6 +20,19 @@ func (self Nodes) Swap(i, j int) {
 func (self Nodes) Less(i, j int) bool {
 	return self[i].Range.I < self[j].Range.I
 }
+
+
+type NodeObjects []*rtree.Obj
+func (self NodeObjects) Len() int {
+	return len(self)
+}
+func (self NodeObjects) Swap(i, j int) {
+	self[i], self[j] = self[j], self[i]
+}
+func (self NodeObjects) Less(i, j int) bool {
+	return self[i].Object.(*Node).Range.I < self[j].Object.(*Node).Range.I
+}
+
 
 func (self Nodes) AsPointSet() *sset.SSet {
 	var set = sset.NewSSet(cmp.Int)
@@ -37,6 +51,8 @@ func Pop(self *[]*Node) []*Node {
 	}
 	return nodes
 }
+
+
 
 func Clear(self *[]*Node) []*Node{
 	var nodes = *self

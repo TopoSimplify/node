@@ -42,8 +42,8 @@ func TestCollapsible(t *testing.T) {
 				var coords = geom.NewLineStringFromWKT(wkt).Coordinates()
 				var poly = pln.New(coords)
 				var n = len(coords) - 1
-				var rng_a, rng_b = rng.Range(0, k), rng.Range(k, n)
-				var ha, hb = newNodeFromPolyline(poly, rng_a, fn), newNodeFromPolyline(poly, rng_b, fn)
+				var rngA, rngB = rng.Range(0, k), rng.Range(k, n)
+				var ha, hb = newNodeFromPolyline(poly, rngA, fn), newNodeFromPolyline(poly, rngB, fn)
 				g.Assert(hb.Collapsible(ha)).Equal(bln)
 			}
 		})
