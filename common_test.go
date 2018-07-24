@@ -2,7 +2,6 @@ package node
 
 import (
 	"github.com/intdxdt/geom"
-	"github.com/intdxdt/random"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/rtree"
@@ -31,7 +30,7 @@ func createHulls(indxs [][]int, coords []geom.Point) []*Node {
 	hulls := make([]*Node, 0)
 	for _, o := range indxs {
 		r := rng.Range(o[0], o[1])
-		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom, random.String(4)))
+		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom))
 	}
 	return hulls
 }
@@ -42,7 +41,7 @@ func createHullObjects(indxs [][]int, coords []geom.Point) []*rtree.Obj {
 	for i := range indxs {
 		o := indxs[i]
 		r := rng.Range(o[0], o[1])
-		h := New(poly.SubCoordinates(r), r, hullGeom, random.String(4))
+		h := New(poly.SubCoordinates(r), r, hullGeom)
 		hulls = append(hulls, rtree.Object(i, h.Bounds(), h))
 	}
 	return hulls

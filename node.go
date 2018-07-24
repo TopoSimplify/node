@@ -1,23 +1,17 @@
 package node
 
 import (
-	"fmt"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
-	"github.com/intdxdt/random"
 	"github.com/TopoSimplify/rng"
 	"github.com/TopoSimplify/seg"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
 )
 
-type NodeQueue interface {
-	NodeQueue() []*Node
-}
-
 //Node Type
 type Node struct {
-	id       string
+	Id       int
 	Polyline *pln.Polyline
 	Range    rng.Rng
 	MBR      mbr.MBR
@@ -26,7 +20,7 @@ type Node struct {
 }
 
 //New Node
-func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) *Node {
+func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) *Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, 0, n)
@@ -44,29 +38,7 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId .
 		Geometry: g,
 	}
 
-	var id string
-	if len(nodeId) > 0 {
-		id = nodeId[0]
-	} else {
-		id = random.String(8)
-	}
-	return nd.SetId(id)
-}
-
-//Id
-func (self *Node) Id() string {
-	return self.id
-}
-
-//Id
-func (self *Node) SubNodeIds() (string, string) {
-	return fmt.Sprintf("%v/a", self.id), fmt.Sprintf("%v/b", self.id)
-}
-
-//Set id
-func (self *Node) SetId(key string) *Node {
-	self.id = key
-	return self
+	return nd
 }
 
 //Implements bbox interface
