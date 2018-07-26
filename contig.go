@@ -1,7 +1,5 @@
 package node
 
-import "github.com/intdxdt/rtree"
-
 //Checks if two nodes: nopde `a` and `b` are contiguous
 // returns  bool(intersects), bool(is contig at vertex), int(number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
@@ -41,13 +39,12 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 }
 
 //Find neibours of node (prev , next)
-func Neighbours(obj *rtree.Obj, neighbs []*rtree.Obj) (*rtree.Obj, *rtree.Obj) {
-	var hull = obj.Object.(*Node)
-	var prev, nxt *rtree.Obj
+func Neighbours(hull *Node, neighbs []*Node) (*Node, *Node) {
+	var prev, nxt *Node
 	var  h *Node
 	var i, j = hull.Range.I, hull.Range.J
 	for k := range neighbs {
-		h  = neighbs[k].Object.(*Node)
+		h  = neighbs[k]
 		if h != hull {
 			if i == h.Range.J {
 				prev = neighbs[k]
