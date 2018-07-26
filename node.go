@@ -48,7 +48,7 @@ func (self *Node) BBox() *mbr.MBR {
 
 //Implements bbox interface
 func (self *Node) Bounds() mbr.MBR {
-	return *self.Geometry.BBox()
+	return self.Geometry.Bounds()
 }
 
 //stringer interface
