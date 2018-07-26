@@ -26,6 +26,11 @@ func TestNodes(t *testing.T) {
 			var hulls = createHulls([][]int{{8, 10}, {10, 12}, {0, 2}, {2, 6}, {6, 8}, {12, len(coords) - 1}}, coords)
 			var ns []*Node
 			for _, n := range hulls {
+				g.Assert(n.Id()).Equal(n.id)
+				ida, idb := n.SubNodeIds()
+				g.Assert(n.Id()).Equal(n.id)
+				g.Assert(ida).Equal(n.id + "/a")
+				g.Assert(idb).Equal(n.id + "/b")
 				ns = append(ns, n)
 			}
 			sort.Sort(Nodes(ns))

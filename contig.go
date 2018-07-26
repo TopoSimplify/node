@@ -4,8 +4,8 @@ package node
 // returns  bool(intersects), bool(is contig at vertex), int(number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
 	//@formatter:off
-	var ga = a.Geometry
-	var gb = b.Geometry
+	var ga = a.Geom
+	var gb = b.Geom
 	var contig = false
 	var interCount = 0
 

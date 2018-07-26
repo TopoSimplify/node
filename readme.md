@@ -1,7 +1,6 @@
-# node
+## node
  
 Linear simplification node 
 
-# License
-
+## License
 (c) 2018 Titus Tienaah. MIT License

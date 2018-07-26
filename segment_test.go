@@ -40,9 +40,9 @@ func TestHullSeg(t *testing.T) {
 				var cs = hulls[i].Coordinates()
 				cs = append(cs, cs[0])
 				g.Assert(hulls[i].Coordinates()).Equal(hulls[i].Polyline.Coordinates)
-				g.Assert(hulls[i].String()).Equal(hulls[i].Geometry.WKT())
-				g.Assert(hulls[i].Geometry).Equal(hulls[i].Geometry)
-				g.Assert(hulls[i].Geometry.BBox()).Equal(hulls[i].BBox())
+				g.Assert(hulls[i].String()).Equal(hulls[i].Geom.WKT())
+				g.Assert(hulls[i].Geom).Equal(hulls[i].Geom)
+				g.Assert(hulls[i].Geom.BBox()).Equal(hulls[i].BBox())
 			}
 		})
 	})

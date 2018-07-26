@@ -7,20 +7,22 @@ import (
 	"github.com/TopoSimplify/seg"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
+	"github.com/intdxdt/random"
+	"fmt"
 )
 
 //Node Type
 type Node struct {
-	Id       int
+	id       string
 	Polyline *pln.Polyline
 	Range    rng.Rng
 	MBR      mbr.MBR
-	Geometry geom.Geometry
+	Geom     geom.Geometry
 	Instance lnr.Linegen
 }
 
 //New Node
-func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) *Node {
+func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) *Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, 0, n)
@@ -35,25 +37,52 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) *Node {
 		Polyline: pln.New(coordinates),
 		Range:    rng,
 		MBR:      g.Bounds(),
-		Geometry: g,
+		Geom:     g,
 	}
 
-	return nd
+	var id string
+	if len(nodeId) > 0 {
+		id = nodeId[0]
+	} else {
+		id = random.String(8)
+	}
+	return nd.SetId(id)
+}
+
+//Id
+func (self *Node) Id() string {
+	return self.id
+}
+
+//Id
+func (self *Node) SubNodeIds() (string, string) {
+	return fmt.Sprintf("%v/a", self.id), fmt.Sprintf("%v/b", self.id)
+}
+
+//Set id
+func (self *Node) SetId(key string) *Node {
+	self.id = key
+	return self
 }
 
 //Implements bbox interface
 func (self *Node) BBox() *mbr.MBR {
-	return self.Geometry.BBox()
+	return self.Geom.BBox()
 }
 
 //Implements bbox interface
 func (self *Node) Bounds() mbr.MBR {
-	return self.Geometry.Bounds()
+	return self.Geom.Bounds()
+}
+
+//Geometry bbox interface
+func (self *Node) Geometry() geom.Geometry {
+	return self.Geom
 }
 
 //stringer interface
 func (self *Node) String() string {
-	return self.Geometry.WKT()
+	return self.Geom.WKT()
 }
 
 //stringer interface
