@@ -16,45 +16,58 @@ func NewQueue() *Queue {
     return &Queue{que: deque.NewDeque()}
 }
 
-func (q *Queue) Append(o *Node) *Queue {
-    q.Lock(); defer q.Unlock()
+func (q *Queue) Append(o Node) *Queue {
+    q.Lock()
     q.que.Append(o)
+    q.Unlock()
     return q
 }
 
-func (q *Queue) AppendLeft(o *Node) *Queue {
-    q.Lock(); defer q.Unlock()
+func (q *Queue) AppendLeft(o Node) *Queue {
+    q.Lock()
     q.que.AppendLeft(o)
+    q.Unlock()
     return q
 }
 
-func (q *Queue) Pop() *Node {
-    q.Lock(); defer q.Unlock()
-    return q.que.Pop().(*Node)
+func (q *Queue) Pop() Node {
+    q.Lock()
+    n := q.que.Pop().(Node)
+    q.Unlock()
+    return n
 }
 
-func (q *Queue) PopLeft() *Node {
-    q.Lock(); defer q.Unlock()
-    return q.que.PopLeft().(*Node)
+func (q *Queue) PopLeft() Node {
+    q.Lock()
+    n := q.que.PopLeft().(Node)
+    q.Unlock()
+    return n
 }
 
 func (q *Queue) Clear() *Queue {
-    q.Lock(); defer q.Unlock()
+    q.Lock()
     q.que.Clear()
+    q.Unlock()
     return q
 }
 
 func (q *Queue) Size() int {
-    q.RLock(); defer q.RUnlock()
-    return q.que.Len()
+    q.RLock()
+    n := q.que.Len()
+    q.RUnlock()
+    return n
 }
 
-func (q *Queue) First() *Node {
-    q.RLock(); defer q.RUnlock()
-	return q.que.First().(*Node)
+func (q *Queue) First() Node {
+    q.RLock()
+    n := q.que.First().(Node)
+    q.RUnlock()
+	return n
 }
 
-func (q *Queue) Last() *Node {
-    q.RLock(); defer q.RUnlock()
-	return q.que.Last().(*Node)
+func (q *Queue) Last() Node {
+    q.RLock()
+    n := q.que.Last().(Node)
+    q.RUnlock()
+	return n
 }

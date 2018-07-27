@@ -21,8 +21,8 @@ type Node struct {
 	Instance lnr.Linegen
 }
 
-//New Node
-func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) *Node {
+//CreateNode Node
+func CreateNode(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId ...string) Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, 0, n)
@@ -33,7 +33,7 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId .
 	chull = geom.ConvexHull(coords, false)
 	var g = geomFn(chull)
 
-	var nd = &Node{
+	var nd = Node{
 		Polyline: pln.New(coordinates),
 		Range:    rng,
 		MBR:      g.Bounds(),
@@ -46,7 +46,9 @@ func New(coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn, nodeId .
 	} else {
 		id = random.String(8)
 	}
-	return nd.SetId(id)
+	nd.SetId(id)
+
+	return nd
 }
 
 //Id

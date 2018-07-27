@@ -43,8 +43,8 @@ func TestCollapsible(t *testing.T) {
 				var poly = pln.New(coords)
 				var n = len(coords) - 1
 				var rngA, rngB = rng.Range(0, k), rng.Range(k, n)
-				var ha, hb = newNodeFromPolyline(poly, rngA, fn), newNodeFromPolyline(poly, rngB, fn)
-				g.Assert(hb.Collapsible(ha)).Equal(bln)
+				var ha, hb = nodeFromPolyline(poly, rngA, fn), nodeFromPolyline(poly, rngB, fn)
+				g.Assert(hb.Collapsible(&ha)).Equal(bln)
 			}
 		})
 
@@ -55,22 +55,22 @@ func TestCollapsible(t *testing.T) {
 			n := len(coords) - 1
 			polyline := pln.New(coords)
 
-			h1 := newNodeFromPolyline(polyline, rng.Range(0, k1), fn)
-			h2 := newNodeFromPolyline(polyline, rng.Range(k1, k2), fn)
-			h3 := newNodeFromPolyline(polyline, rng.Range(k2, k3), fn)
-			h4 := newNodeFromPolyline(polyline, rng.Range(k3, k4), fn)
-			h5 := newNodeFromPolyline(polyline, rng.Range(k4, n), fn)
+			h1 := nodeFromPolyline(polyline, rng.Range(0, k1), fn)
+			h2 := nodeFromPolyline(polyline, rng.Range(k1, k2), fn)
+			h3 := nodeFromPolyline(polyline, rng.Range(k2, k3), fn)
+			h4 := nodeFromPolyline(polyline, rng.Range(k3, k4), fn)
+			h5 := nodeFromPolyline(polyline, rng.Range(k4, n), fn)
 
-			hulls := [][2]*Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
+			hulls := [][2]Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
 			for _, o := range hulls {
 				ha, hb := o[0], o[1]
-				g.Assert(hb.Collapsible(ha)).IsTrue()
+				g.Assert(hb.Collapsible(&ha)).IsTrue()
 			}
 
 			ha, hb := h4, h5
-			g.Assert(hb.Collapsible(ha)).IsFalse()
+			g.Assert(hb.Collapsible(&ha)).IsFalse()
 			//if not contiguous should be eql
-			g.Assert(h5.Collapsible(h3)).IsTrue()
+			g.Assert(h5.Collapsible(&h3)).IsTrue()
 
 		})
 
@@ -78,7 +78,7 @@ func TestCollapsible(t *testing.T) {
 			//checks if score is valid at threshold of constrained dp
 			var coords = linearCoords("LINESTRING ( 960 840, 980 840, 980 880, 1020 900, 1080 880, 1120 860, 1160 800, 1160 760, 1140 700, 1080 700, 1040 720, 1060 760, 1120 800, 1080 840, 1020 820, 940 760 )")
 			var hulls = createHulls([][]int{{0, 1}, {1, 6}, {6, 8}, {8, 10}, {10, 12}, {12, len(coords) - 1}}, coords)
-			g.Assert(hulls[0].Collapsible(hulls[1])).IsTrue()
+			g.Assert(hulls[0].Collapsible(&hulls[1])).IsTrue()
 
 		})
 	})

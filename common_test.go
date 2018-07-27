@@ -24,18 +24,18 @@ func linearCoords(wkt string) []geom.Point{
 	return geom.NewLineStringFromWKT(wkt).Coordinates()
 }
 
-func createHulls(indxs [][]int, coords []geom.Point) []*Node {
+func createHulls(indxs [][]int, coords []geom.Point) []Node {
 	poly := pln.New(coords)
-	hulls := make([]*Node, 0, len(indxs))
+	hulls := make([]Node, 0, len(indxs))
 	for _, o := range indxs {
 		r := rng.Range(o[0], o[1])
-		hulls = append(hulls, New(poly.SubCoordinates(r), r, hullGeom))
+		hulls = append(hulls, CreateNode(poly.SubCoordinates(r), r, hullGeom))
 	}
 	return hulls
 }
 
-//New Node
-func newNodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) *Node {
-	return New(polyline.SubCoordinates(rng), rng, geomFn)
+//CreateNode Node
+func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) Node {
+	return CreateNode(polyline.SubCoordinates(rng), rng, geomFn)
 }
 

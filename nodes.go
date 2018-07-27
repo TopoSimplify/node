@@ -5,7 +5,7 @@ import (
 	"github.com/intdxdt/sset"
 )
 
-type Nodes []*Node
+type Nodes []Node
 
 
 func (self Nodes) Len() int {
@@ -20,9 +20,6 @@ func (self Nodes) Less(i, j int) bool {
 	return self[i].Range.I < self[j].Range.I
 }
 
-
-
-
 func (self Nodes) AsPointSet() *sset.SSet {
 	var set = sset.NewSSet(cmp.Int)
 	for _, o := range self {
@@ -31,11 +28,11 @@ func (self Nodes) AsPointSet() *sset.SSet {
 	return set
 }
 
-func Pop(self *[]*Node) []*Node {
+func Pop(self *[]Node) []Node {
 	var nodes = *self
 	if len(nodes) != 0 {
 		n := len(nodes) - 1
-		nodes[n] = nil
+		nodes[n] = Node{}
 		*self = nodes[:n]
 	}
 	return nodes
@@ -43,10 +40,10 @@ func Pop(self *[]*Node) []*Node {
 
 
 
-func Clear(self *[]*Node) []*Node{
+func Clear(self *[]Node) []Node{
 	var nodes = *self
 	for i := range nodes {
-		nodes[i] = nil
+		nodes[i] = Node{}
 	}
 	*self = nodes[:0]
 	return nodes
