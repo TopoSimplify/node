@@ -1,6 +1,7 @@
 package node
 
 import (
+	"fmt"
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
 	"github.com/TopoSimplify/rng"
@@ -8,7 +9,6 @@ import (
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
 	"github.com/intdxdt/random"
-	"fmt"
 )
 
 //Node Type

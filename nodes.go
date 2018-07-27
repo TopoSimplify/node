@@ -5,6 +5,22 @@ import (
 	"github.com/intdxdt/sset"
 )
 
+type NodePtrs []*Node
+
+func (self NodePtrs) Len() int {
+	return len(self)
+}
+
+func (self NodePtrs) Swap(i, j int) {
+	self[i], self[j] = self[j], self[i]
+}
+
+func (self NodePtrs) Less(i, j int) bool {
+	return self[i].Range.I < self[j].Range.I
+}
+
+
+
 type Nodes []Node
 
 
