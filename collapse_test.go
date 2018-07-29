@@ -79,7 +79,6 @@ func TestCollapsible(t *testing.T) {
 			var coords = linearCoords("LINESTRING ( 960 840, 980 840, 980 880, 1020 900, 1080 880, 1120 860, 1160 800, 1160 760, 1140 700, 1080 700, 1040 720, 1060 760, 1120 800, 1080 840, 1020 820, 940 760 )")
 			var hulls = createHulls([][]int{{0, 1}, {1, 6}, {6, 8}, {8, 10}, {10, 12}, {12, len(coords) - 1}}, coords)
 			g.Assert(hulls[0].Collapsible(&hulls[1])).IsTrue()
-
 		})
 	})
 }

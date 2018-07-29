@@ -4,7 +4,10 @@ import (
 	"github.com/intdxdt/geom"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
+	"github.com/intdxdt/iter"
 )
+
+var idgen = iter.NewIntGen(0)
 
 //hull geom
 func hullGeom(coords []geom.Point) geom.Geometry {
@@ -29,13 +32,13 @@ func createHulls(indxs [][]int, coords []geom.Point) []Node {
 	hulls := make([]Node, 0, len(indxs))
 	for _, o := range indxs {
 		r := rng.Range(o[0], o[1])
-		hulls = append(hulls, CreateNode(poly.SubCoordinates(r), r, hullGeom))
+		hulls = append(hulls, CreateNode(idgen, poly.SubCoordinates(r), r, hullGeom))
 	}
 	return hulls
 }
 
 //CreateNode Node
 func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) Node {
-	return CreateNode(polyline.SubCoordinates(rng), rng, geomFn)
+	return CreateNode(idgen, polyline.SubCoordinates(rng), rng, geomFn)
 }
 

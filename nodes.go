@@ -20,7 +20,6 @@ func (self NodePtrs) Less(i, j int) bool {
 }
 
 
-
 type Nodes []Node
 
 
@@ -58,10 +57,7 @@ func Pop(self *[]Node) []Node {
 
 func Clear(self *[]Node) []Node{
 	var nodes = *self
-	for i := range nodes {
-		nodes[i] = Node{}
-	}
-	*self = nodes[:0]
+	*self = make([]Node, 0, len(nodes))
 	return nodes
 }
 

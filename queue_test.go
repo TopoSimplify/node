@@ -28,9 +28,7 @@ func TestQueue(t *testing.T) {
             g.Assert(queue.PopLeft().Range.AsArray()).Equal([2]int{2, 6})
             g.Assert(queue.Pop().Range.AsArray()).Equal([2]int{12, len(coords) - 1})
             g.Assert(queue.Last().Range.AsArray()).Equal([2]int{10, 12})
-
             g.Assert(queue.Clear().Size()).Equal(0)
-
         })
     })
 }
