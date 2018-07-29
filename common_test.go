@@ -7,7 +7,7 @@ import (
 	"github.com/intdxdt/iter"
 )
 
-var idgen = iter.NewIntGen(0)
+var idgen = iter.NewIgenerator(0)
 
 //hull geom
 func hullGeom(coords []geom.Point) geom.Geometry {

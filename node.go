@@ -21,7 +21,7 @@ type Node struct {
 }
 
 //CreateNode Node
-func CreateNode(id *iter.IntGen, coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) Node {
+func CreateNode(id *iter.Igen, coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, 0, n)
@@ -41,7 +41,7 @@ func CreateNode(id *iter.IntGen, coordinates []geom.Point, rng rng.Rng, geomFn g
 }
 
 //CreateNode From MBR
-func CreateNodeFromMBR(id *iter.IntGen, box mbr.MBR) Node {
+func CreateNodeFromMBR(id *iter.Igen, box mbr.MBR) Node {
 	return Node{Id: id.Next(), MBR: box}
 }
 
