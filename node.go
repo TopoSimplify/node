@@ -21,7 +21,7 @@ type Node struct {
 }
 
 //CreateNode Node
-func CreateNode(idgen *iter.IntGen, coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) Node {
+func CreateNode(id *iter.IntGen, coordinates []geom.Point, rng rng.Rng, geomFn geom.GeometryFn) Node {
 	var chull []geom.Point
 	var n = len(coordinates)
 	var coords = make([]geom.Point, 0, n)
@@ -32,7 +32,7 @@ func CreateNode(idgen *iter.IntGen, coordinates []geom.Point, rng rng.Rng, geomF
 	var g = geomFn(chull)
 
 	return Node{
-		Id:       idgen.Next(),
+		Id:       id.Next(),
 		Polyline: pln.New(coordinates),
 		Range:    rng,
 		MBR:      g.Bounds(),
