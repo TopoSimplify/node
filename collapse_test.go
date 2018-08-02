@@ -6,6 +6,7 @@ import (
 	"github.com/franela/goblin"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
+	"time"
 )
 
 var fn = hullGeom
@@ -37,11 +38,12 @@ func TestCollapsible(t *testing.T) {
 
 	g.Describe("hull collapse", func() {
 		g.It("should test hull collapsibility", func() {
+			g.Timeout(1 * time.Hour)
 			for _, o := range lnwkts {
 				k, bln, wkt := o.k, o.bln, o.wkt
-				var coords = geom.NewLineStringFromWKT(wkt).Coordinates()
+				var coords = geom.NewLineStringFromWKT(wkt).Coordinates
 				var poly = pln.New(coords)
-				var n = len(coords) - 1
+				var n = coords.Len() - 1
 				var rngA, rngB = rng.Range(0, k), rng.Range(k, n)
 				var ha, hb = nodeFromPolyline(poly, rngA, fn), nodeFromPolyline(poly, rngB, fn)
 				g.Assert(hb.Collapsible(&ha)).Equal(bln)
@@ -49,19 +51,19 @@ func TestCollapsible(t *testing.T) {
 		})
 
 		g.It("should test collapsible of contiguous and non contiguous", func() {
-			wkt := "LINESTRING ( 467.082432820504 469.7831661127625, 480.006016496363 438.2819309028562, 505.85318384808096 402.74207579424393, 587.433305801941 375.2794604830436, 624.5886088700355 382.54897630071423, 642.3585364243417 412.4347635511382, 643.4709527477502 439.116190719288, 605.3439380779691 452.77166096041014, 574.5798901784301 466.2701717734732, 531.700351199799 481.0913018291391, 523.623111402387 491.59171356577457, 520.3922154834223 515.8234329580102, 521.1999394631636 540.0551523502459, 530.8926272200578 545.7092202084342, 581.1879051657643 561.1022524449884, 599.9685326993344 539.6722729770875, 620.4120431716209 520.2642150257254, 632.0270408479774 503.31259679536714, 643.4709527477502 439.116190719288, 653.6666721407183 466.55227019379777, 656.8975680596831 497.2457814239629, 644.7817083635653 540.862876329987, 593.0873736601293 582.0567992967876, 551.8934506933286 597.4035549118702 )"
-			coords := geom.NewLineStringFromWKT(wkt).Coordinates()
-			k1, k2, k3, k4 := 6, 10, 14, 18
-			n := len(coords) - 1
-			polyline := pln.New(coords)
+			var wkt = "LINESTRING ( 467.082432820504 469.7831661127625, 480.006016496363 438.2819309028562, 505.85318384808096 402.74207579424393, 587.433305801941 375.2794604830436, 624.5886088700355 382.54897630071423, 642.3585364243417 412.4347635511382, 643.4709527477502 439.116190719288, 605.3439380779691 452.77166096041014, 574.5798901784301 466.2701717734732, 531.700351199799 481.0913018291391, 523.623111402387 491.59171356577457, 520.3922154834223 515.8234329580102, 521.1999394631636 540.0551523502459, 530.8926272200578 545.7092202084342, 581.1879051657643 561.1022524449884, 599.9685326993344 539.6722729770875, 620.4120431716209 520.2642150257254, 632.0270408479774 503.31259679536714, 643.4709527477502 439.116190719288, 653.6666721407183 466.55227019379777, 656.8975680596831 497.2457814239629, 644.7817083635653 540.862876329987, 593.0873736601293 582.0567992967876, 551.8934506933286 597.4035549118702 )"
+			var coords = geom.NewLineStringFromWKT(wkt).Coordinates
+			var k1, k2, k3, k4 = 6, 10, 14, 18
+			var n = coords.Len() - 1
+			var polyline = pln.New(coords)
 
-			h1 := nodeFromPolyline(polyline, rng.Range(0, k1), fn)
-			h2 := nodeFromPolyline(polyline, rng.Range(k1, k2), fn)
-			h3 := nodeFromPolyline(polyline, rng.Range(k2, k3), fn)
-			h4 := nodeFromPolyline(polyline, rng.Range(k3, k4), fn)
-			h5 := nodeFromPolyline(polyline, rng.Range(k4, n), fn)
+			var h1 = nodeFromPolyline(polyline, rng.Range(0, k1), fn)
+			var h2 = nodeFromPolyline(polyline, rng.Range(k1, k2), fn)
+			var h3 = nodeFromPolyline(polyline, rng.Range(k2, k3), fn)
+			var h4 = nodeFromPolyline(polyline, rng.Range(k3, k4), fn)
+			var h5 = nodeFromPolyline(polyline, rng.Range(k4, n), fn)
 
-			hulls := [][2]Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
+			var hulls = [][2]Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
 			for _, o := range hulls {
 				ha, hb := o[0], o[1]
 				g.Assert(hb.Collapsible(&ha)).IsTrue()
@@ -77,7 +79,7 @@ func TestCollapsible(t *testing.T) {
 		g.It("should test collapsibility", func() {
 			//checks if score is valid at threshold of constrained dp
 			var coords = linearCoords("LINESTRING ( 960 840, 980 840, 980 880, 1020 900, 1080 880, 1120 860, 1160 800, 1160 760, 1140 700, 1080 700, 1040 720, 1060 760, 1120 800, 1080 840, 1020 820, 940 760 )")
-			var hulls = createHulls([][]int{{0, 1}, {1, 6}, {6, 8}, {8, 10}, {10, 12}, {12, len(coords) - 1}}, coords)
+			var hulls = createHulls([][]int{{0, 1}, {1, 6}, {6, 8}, {8, 10}, {10, 12}, {12, coords.Len() - 1}}, coords)
 			g.Assert(hulls[0].Collapsible(&hulls[1])).IsTrue()
 		})
 	})

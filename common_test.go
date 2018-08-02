@@ -2,32 +2,32 @@ package node
 
 import (
 	"github.com/intdxdt/geom"
+	"github.com/intdxdt/iter"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
-	"github.com/intdxdt/iter"
 )
 
-var idgen = iter.NewIgenerator(0)
+var idgen = iter.NewIgen(0)
 
 //hull geom
-func hullGeom(coords []geom.Point) geom.Geometry {
+func hullGeom(coords geom.Coords) geom.Geometry {
 	var g geom.Geometry
 
-	if len(coords) > 2 {
+	if coords.Len() > 2 {
 		g = geom.NewPolygon(coords)
-	} else if len(coords) == 2 {
+	} else if coords.Len() == 2 {
 		g = geom.NewLineString(coords)
 	} else {
-		g = coords[0]
+		g = coords.Pt(0)
 	}
 	return g
 }
 
-func linearCoords(wkt string) []geom.Point{
-	return geom.NewLineStringFromWKT(wkt).Coordinates()
+func linearCoords(wkt string) geom.Coords{
+	return geom.NewLineStringFromWKT(wkt).Coordinates
 }
 
-func createHulls(indxs [][]int, coords []geom.Point) []Node {
+func createHulls(indxs [][]int, coords geom.Coords) []Node {
 	poly := pln.New(coords)
 	hulls := make([]Node, 0, len(indxs))
 	for _, o := range indxs {

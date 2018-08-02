@@ -18,13 +18,11 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 		interCount = len(interpts)
 
 		for _, pt := range interpts {
-			var blnAseg = pt.Equals2D(&aiPt) || pt.Equals2D(&ajPt)
-			var blnBseg = pt.Equals2D(&biPt) || pt.Equals2D(&bjPt)
+			var blnAseg = pt.Equals2D(aiPt) || pt.Equals2D(ajPt)
+			var blnBseg = pt.Equals2D(biPt) || pt.Equals2D(bjPt)
 			if blnAseg || blnBseg {
-				contig = ajPt.Equals2D(&biPt) ||
-					ajPt.Equals2D(&bjPt) ||
-					aiPt.Equals2D(&bjPt) ||
-					aiPt.Equals2D(&biPt)
+				contig = ajPt.Equals2D(biPt) || ajPt.Equals2D(bjPt) ||
+					aiPt.Equals2D(bjPt) || aiPt.Equals2D(biPt)
 			}
 			if contig {
 				break

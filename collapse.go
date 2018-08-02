@@ -21,17 +21,17 @@ func (self *Node) Collapsible(other *Node) bool {
 	var bi, bj = other.SegmentPoints()
 
 	var c *geom.Point
-	if ai.Equals2D(&bi) || aj.Equals2D(&bi) {
-		c = &bi
-	} else if ai.Equals2D(&bj) || aj.Equals2D(&bj) {
-		c = &bj
+	if ai.Equals2D(bi) || aj.Equals2D(bi) {
+		c = bi
+	} else if ai.Equals2D(bj) || aj.Equals2D(bj) {
+		c = bj
 	} else {
 		return true
 	}
 
-	var t = &bj
+	var t = bj
 	if c.Equals2D(t) {
-		t = &bi
+		t = bi
 	}
 	if ply, ok := self.Geom.Geometry().(*geom.Polygon); ok {
 		return !ply.Shell.PointCompletelyInRing(t)
