@@ -3,10 +3,10 @@ package node
 import (
 	"github.com/intdxdt/mbr"
 	"github.com/intdxdt/geom"
+	"github.com/intdxdt/iter"
 	"github.com/TopoSimplify/rng"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/lnr"
-	"github.com/intdxdt/iter"
 )
 
 //Node Type
@@ -20,7 +20,7 @@ type Node struct {
 }
 
 //CreateNode Node
-func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) Node {
+func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry) Node {
 	var chull = geom.ConvexHull(coordinates)
 	var g = geomFn(chull)
 	return Node{
@@ -57,12 +57,10 @@ func (self *Node) String() string {
 	return self.Geom.WKT()
 }
 
-
 //coordinates
 func (self *Node) Coordinates() geom.Coords {
 	return self.Polyline.Coordinates
 }
-
 
 //first point in coordinates
 func (self *Node) First() *geom.Point {
@@ -76,14 +74,16 @@ func (self *Node) Last() *geom.Point {
 
 //as segment
 func (self *Node) Segment() *geom.Segment {
-	return geom.NewSegment(self.Polyline.Coordinates, self.Range.I, self.Range.J)
+	return geom.NewSegment(
+		self.Polyline.Coordinates, 0, self.Polyline.Coordinates.Len()-1,
+	)
 }
 
 //hull segment as polyline
 func (self *Node) SegmentAsPolyline() *pln.Polyline {
-	var n =  self.Polyline.Len() -1
+	var n = self.Polyline.Len()
 	var coords = self.Polyline.Coordinates
-	coords.Idxs = []int{coords.Idxs[0], coords.Idxs[n]}
+	coords.Idxs = []int{coords.Idxs[0], coords.Idxs[n-1]}
 	return pln.New(coords)
 }
 
