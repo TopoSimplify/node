@@ -20,7 +20,7 @@ type Node struct {
 }
 
 //CreateNode Node
-func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn geom.GeometryFn) Node {
+func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) Node {
 	var chull = geom.ConvexHull(coordinates)
 	var g = geomFn(chull)
 	return Node{

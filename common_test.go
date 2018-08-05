@@ -38,7 +38,7 @@ func createHulls(indxs [][]int, coords geom.Coords) []Node {
 }
 
 //CreateNode Node
-func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn geom.GeometryFn) Node {
+func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) Node {
 	return CreateNode(idgen, polyline.SubCoordinates(rng), rng, geomFn)
 }
 
