@@ -12,7 +12,7 @@ import (
 //Node Type
 type Node struct {
 	Id       int
-	Polyline *pln.Polyline
+	Polyline pln.Polyline
 	Range    rng.Rng
 	MBR      mbr.MBR
 	Geom     geom.Geometry
@@ -25,7 +25,7 @@ func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func
 	var g = geomFn(chull)
 	return Node{
 		Id:       id.Next(),
-		Polyline: pln.New(coordinates),
+		Polyline: pln.CreatePolyline(coordinates),
 		Range:    rng,
 		MBR:      g.Bounds(),
 		Geom:     g,
@@ -80,11 +80,11 @@ func (self *Node) Segment() *geom.Segment {
 }
 
 //hull segment as polyline
-func (self *Node) SegmentAsPolyline() *pln.Polyline {
+func (self *Node) SegmentAsPolyline() pln.Polyline {
 	var n = self.Polyline.Len()
 	var coords = self.Polyline.Coordinates
 	coords.Idxs = []int{coords.Idxs[0], coords.Idxs[n-1]}
-	return pln.New(coords)
+	return pln.CreatePolyline(coords)
 }
 
 //segment points

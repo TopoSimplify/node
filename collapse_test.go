@@ -42,10 +42,10 @@ func TestCollapsible(t *testing.T) {
 			for _, o := range lnwkts {
 				k, bln, wkt := o.k, o.bln, o.wkt
 				var coords = geom.NewLineStringFromWKT(wkt).Coordinates
-				var poly = pln.New(coords)
+				var poly = pln.CreatePolyline(coords)
 				var n = coords.Len() - 1
 				var rngA, rngB = rng.Range(0, k), rng.Range(k, n)
-				var ha, hb = nodeFromPolyline(poly, rngA, fn), nodeFromPolyline(poly, rngB, fn)
+				var ha, hb = nodeFromPolyline(&poly, rngA, fn), nodeFromPolyline(&poly, rngB, fn)
 				g.Assert(hb.Collapsible(&ha)).Equal(bln)
 			}
 		})
@@ -55,13 +55,13 @@ func TestCollapsible(t *testing.T) {
 			var coords = geom.NewLineStringFromWKT(wkt).Coordinates
 			var k1, k2, k3, k4 = 6, 10, 14, 18
 			var n = coords.Len() - 1
-			var polyline = pln.New(coords)
+			var polyline = pln.CreatePolyline(coords)
 
-			var h1 = nodeFromPolyline(polyline, rng.Range(0, k1), fn)
-			var h2 = nodeFromPolyline(polyline, rng.Range(k1, k2), fn)
-			var h3 = nodeFromPolyline(polyline, rng.Range(k2, k3), fn)
-			var h4 = nodeFromPolyline(polyline, rng.Range(k3, k4), fn)
-			var h5 = nodeFromPolyline(polyline, rng.Range(k4, n), fn)
+			var h1 = nodeFromPolyline(&polyline, rng.Range(0, k1), fn)
+			var h2 = nodeFromPolyline(&polyline, rng.Range(k1, k2), fn)
+			var h3 = nodeFromPolyline(&polyline, rng.Range(k2, k3), fn)
+			var h4 = nodeFromPolyline(&polyline, rng.Range(k3, k4), fn)
+			var h5 = nodeFromPolyline(&polyline, rng.Range(k4, n), fn)
 
 			var hulls = [][2]Node{{h1, h4}, {h1, h2}, {h1, h5}, {h2, h3}, {h2, h4}, {h2, h5}}
 			for _, o := range hulls {

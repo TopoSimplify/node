@@ -28,7 +28,7 @@ func linearCoords(wkt string) geom.Coords{
 }
 
 func createHulls(indxs [][]int, coords geom.Coords) []Node {
-	poly := pln.New(coords)
+	poly := pln.CreatePolyline(coords)
 	hulls := make([]Node, 0, len(indxs))
 	for _, o := range indxs {
 		r := rng.Range(o[0], o[1])
