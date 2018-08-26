@@ -1,9 +1,9 @@
 package node
 
-//Checks if two nodes: nopde `a` and `b` are contiguous
+// Checks if two nodes: nopde `a` and `b` are contiguous
 // returns  bool(intersects), bool(is contig at vertex), int(number of intersections)
 func IsContiguous(a, b *Node) (bool, bool, int) {
-	//@formatter:off
+	// @formatter:off
 	var ga = a.Geom
 	var gb = b.Geom
 	var contig = false
@@ -32,13 +32,13 @@ func IsContiguous(a, b *Node) (bool, bool, int) {
 	return bln, contig, interCount
 }
 
-//Find neibours of node (prev , next)
+// Find neibours of node (prev , next)
 func Neighbours(hull *Node, neighbs []*Node) (*Node, *Node) {
 	var prev, nxt *Node
-	var  h *Node
+	var h *Node
 	var i, j = hull.Range.I, hull.Range.J
 	for k := range neighbs {
-		h  = neighbs[k]
+		h = neighbs[k]
 		if h != hull {
 			if i == h.Range.J {
 				prev = neighbs[k]

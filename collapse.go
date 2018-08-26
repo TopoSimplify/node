@@ -4,15 +4,15 @@ import (
 	"github.com/intdxdt/geom"
 )
 
-//Is node collapsible with respect to other
-//self and other should be contiguous
+// Is node collapsible with respect to other
+// self and other should be contiguous
 func (self *Node) Collapsible(other *Node) bool {
-	//segments are already collapsed
+	// segments are already collapsed
 	if self.Range.Size() == 1 {
 		return true
 	}
-	//or hull can be a linear for
-	//colinear boundaries where self.range.size > 1
+	// or hull can be a linear for
+	// colinear boundaries where self.range.size > 1
 	if self.Geom.Type().IsLineString() {
 		return true
 	}

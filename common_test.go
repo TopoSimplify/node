@@ -1,15 +1,15 @@
 package node
 
 import (
-	"github.com/intdxdt/geom"
-	"github.com/intdxdt/iter"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
+	"github.com/intdxdt/geom"
+	"github.com/intdxdt/iter"
 )
 
 var idgen = iter.NewIgen(0)
 
-//hull geom
+// hull geom
 func hullGeom(coords geom.Coords) geom.Geometry {
 	var g geom.Geometry
 
@@ -23,7 +23,7 @@ func hullGeom(coords geom.Coords) geom.Geometry {
 	return g
 }
 
-func linearCoords(wkt string) geom.Coords{
+func linearCoords(wkt string) geom.Coords {
 	return geom.NewLineStringFromWKT(wkt).Coordinates
 }
 
@@ -37,8 +37,7 @@ func createHulls(indxs [][]int, coords geom.Coords) []Node {
 	return hulls
 }
 
-//CreateNode Node
-func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn func(geom.Coords)geom.Geometry) Node {
+// CreateNode Node
+func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry) Node {
 	return CreateNode(idgen, polyline.SubCoordinates(rng), rng, geomFn)
 }
-

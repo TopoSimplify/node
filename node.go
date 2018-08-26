@@ -1,15 +1,15 @@
 package node
 
 import (
-	"github.com/intdxdt/mbr"
+	"github.com/TopoSimplify/lnr"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
-	"github.com/TopoSimplify/rng"
-	"github.com/TopoSimplify/pln"
-	"github.com/TopoSimplify/lnr"
+	"github.com/intdxdt/mbr"
 )
 
-//Node Type
+// Node Type
 type Node struct {
 	Id       int
 	Polyline pln.Polyline
@@ -19,7 +19,7 @@ type Node struct {
 	Instance lnr.Linegen
 }
 
-//CreateNode Node
+// CreateNode Node
 func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry) Node {
 	var chull = geom.ConvexHull(coordinates)
 	var g = geomFn(chull)
@@ -32,54 +32,54 @@ func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func
 	}
 }
 
-//CreateNode From MBR
+// CreateNode From MBR
 func CreateNodeFromMBR(id *iter.Igen, box mbr.MBR) Node {
 	return Node{Id: id.Next(), MBR: box}
 }
 
-//Implements bbox interface
+// Implements bbox interface
 func (self *Node) BBox() *mbr.MBR {
 	return self.Geom.BBox()
 }
 
-//Implements bbox interface
+// Implements bbox interface
 func (self *Node) Bounds() mbr.MBR {
 	return self.Geom.Bounds()
 }
 
-//Geometry bbox interface
+// Geometry bbox interface
 func (self *Node) Geometry() geom.Geometry {
 	return self.Geom
 }
 
-//stringer interface
+// stringer interface
 func (self *Node) String() string {
 	return self.Geom.WKT()
 }
 
-//coordinates
+// coordinates
 func (self *Node) Coordinates() geom.Coords {
 	return self.Polyline.Coordinates
 }
 
-//first point in coordinates
+// first point in coordinates
 func (self *Node) First() *geom.Point {
 	return self.Polyline.Coordinates.First()
 }
 
-//last point in coordinates
+// last point in coordinates
 func (self *Node) Last() *geom.Point {
 	return self.Polyline.Coordinates.Last()
 }
 
-//as segment
+// as segment
 func (self *Node) Segment() *geom.Segment {
 	return geom.NewSegment(
 		self.Polyline.Coordinates, 0, self.Polyline.Coordinates.Len()-1,
 	)
 }
 
-//hull segment as polyline
+// hull segment as polyline
 func (self *Node) SegmentAsPolyline() pln.Polyline {
 	var n = self.Polyline.Len()
 	var coords = self.Polyline.Coordinates
@@ -87,7 +87,7 @@ func (self *Node) SegmentAsPolyline() pln.Polyline {
 	return pln.CreatePolyline(coords)
 }
 
-//segment points
+// segment points
 func (self *Node) SegmentPoints() (*geom.Point, *geom.Point) {
 	return self.First(), self.Last()
 }
