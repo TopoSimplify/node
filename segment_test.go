@@ -1,12 +1,12 @@
 package node
 
 import (
+	"time"
+	"testing"
+	"github.com/intdxdt/geom"
+	"github.com/franela/goblin"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
-	"github.com/franela/goblin"
-	"github.com/intdxdt/geom"
-	"testing"
-	"time"
 )
 
 func TestHullSeg(t *testing.T) {

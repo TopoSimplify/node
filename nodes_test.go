@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func popObj(self *[]*rtree.Obj) []*rtree.Obj {
+func popObj(self *[]*rtree.BoxObject) []*rtree.BoxObject {
 	var nodes = *self
 	if len(nodes) != 0 {
 		n := len(nodes) - 1
