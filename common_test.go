@@ -1,10 +1,10 @@
 package node
 
 import (
-	"github.com/TopoSimplify/pln"
-	"github.com/TopoSimplify/rng"
 	"github.com/intdxdt/geom"
 	"github.com/intdxdt/iter"
+	"github.com/TopoSimplify/pln"
+	"github.com/TopoSimplify/rng"
 )
 
 var idgen = iter.NewIgen(0)
@@ -28,16 +28,16 @@ func linearCoords(wkt string) geom.Coords {
 }
 
 func createHulls(indxs [][]int, coords geom.Coords) []Node {
-	poly := pln.CreatePolyline(coords)
-	hulls := make([]Node, 0, len(indxs))
+	var poly = pln.CreatePolyline(coords)
+	var hulls = make([]Node, 0, len(indxs))
 	for _, o := range indxs {
 		r := rng.Range(o[0], o[1])
-		hulls = append(hulls, CreateNode(idgen, poly.SubCoordinates(r), r, hullGeom))
+		hulls = append(hulls, CreateNode(idgen, poly.SubCoordinates(r), r, hullGeom, nil))
 	}
 	return hulls
 }
 
 // CreateNode Node
 func nodeFromPolyline(polyline *pln.Polyline, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry) Node {
-	return CreateNode(idgen, polyline.SubCoordinates(rng), rng, geomFn)
+	return CreateNode(idgen, polyline.SubCoordinates(rng), rng, geomFn, nil)
 }

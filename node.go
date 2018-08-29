@@ -1,12 +1,12 @@
 package node
 
 import (
+	"github.com/intdxdt/mbr"
+	"github.com/intdxdt/geom"
+	"github.com/intdxdt/iter"
 	"github.com/TopoSimplify/lnr"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
-	"github.com/intdxdt/geom"
-	"github.com/intdxdt/iter"
-	"github.com/intdxdt/mbr"
 )
 
 // Node Type
@@ -20,22 +20,19 @@ type Node struct {
 }
 
 // CreateNode Node
-func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng, geomFn func(geom.Coords) geom.Geometry) Node {
-	var chull = geom.ConvexHull(coordinates)
-	var g = geomFn(chull)
+func CreateNode(id *iter.Igen, coordinates geom.Coords, rng rng.Rng,
+	geomFn func(geom.Coords) geom.Geometry, instance lnr.Linegen) Node {
+	var g = geomFn(geom.ConvexHull(coordinates))
 	return Node{
 		Id:       id.Next(),
 		Polyline: pln.CreatePolyline(coordinates),
 		Range:    rng,
 		MBR:      g.Bounds(),
 		Geom:     g,
+		Instance: instance,
 	}
 }
 
-// CreateNode From MBR
-func CreateNodeFromMBR(id *iter.Igen, box mbr.MBR) Node {
-	return Node{Id: id.Next(), MBR: box}
-}
 
 // Implements bbox interface
 func (self *Node) BBox() *mbr.MBR {

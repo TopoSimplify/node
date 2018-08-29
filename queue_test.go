@@ -1,9 +1,9 @@
 package node
 
 import (
-	"github.com/franela/goblin"
-	"testing"
 	"time"
+	"testing"
+	"github.com/franela/goblin"
 )
 
 func TestQueue(t *testing.T) {
