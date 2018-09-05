@@ -51,8 +51,6 @@ func Pop(self *[]Node) []Node {
 	return nodes
 }
 
-func Clear(self *[]Node) []Node {
-	var nodes = *self
-	*self = make([]Node, 0, len(nodes))
-	return nodes
+func Clear(self *[]Node){
+	*self = (*self)[:0]
 }
