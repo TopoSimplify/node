@@ -7,35 +7,35 @@ import (
 
 type NodePtrs []*Node
 
-func (self NodePtrs) Len() int {
-	return len(self)
+func (nptrs NodePtrs) Len() int {
+	return len(nptrs)
 }
 
-func (self NodePtrs) Swap(i, j int) {
-	self[i], self[j] = self[j], self[i]
+func (nptrs NodePtrs) Swap(i, j int) {
+	nptrs[i], nptrs[j] = nptrs[j], nptrs[i]
 }
 
-func (self NodePtrs) Less(i, j int) bool {
-	return self[i].Range.I < self[j].Range.I
+func (nptrs NodePtrs) Less(i, j int) bool {
+	return nptrs[i].Range.I < nptrs[j].Range.I
 }
 
 type Nodes []Node
 
-func (self Nodes) Len() int {
-	return len(self)
+func (nodes Nodes) Len() int {
+	return len(nodes)
 }
 
-func (self Nodes) Swap(i, j int) {
-	self[i], self[j] = self[j], self[i]
+func (nodes Nodes) Swap(i, j int) {
+	nodes[i], nodes[j] = nodes[j], nodes[i]
 }
 
-func (self Nodes) Less(i, j int) bool {
-	return self[i].Range.I < self[j].Range.I
+func (nodes Nodes) Less(i, j int) bool {
+	return nodes[i].Range.I < nodes[j].Range.I
 }
 
-func (self Nodes) AsPointSet() *sset.SSet {
+func (nodes Nodes) AsPointSet() *sset.SSet {
 	var set = sset.NewSSet(cmp.Int)
-	for _, o := range self {
+	for _, o := range nodes {
 		set.Extend(o.Range.I, o.Range.J)
 	}
 	return set

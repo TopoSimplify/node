@@ -1,10 +1,10 @@
 package node
 
 import (
-	"github.com/intdxdt/geom"
-	"github.com/intdxdt/iter"
 	"github.com/TopoSimplify/pln"
 	"github.com/TopoSimplify/rng"
+	"github.com/intdxdt/geom"
+	"github.com/intdxdt/iter"
 )
 
 var idgen = iter.NewIgen(0)

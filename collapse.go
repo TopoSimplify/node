@@ -6,18 +6,18 @@ import (
 
 // Is node collapsible with respect to other
 // self and other should be contiguous
-func (self *Node) Collapsible(other *Node) bool {
+func (node *Node) Collapsible(other *Node) bool {
 	// segments are already collapsed
-	if self.Range.Size() == 1 {
+	if node.Range.Size() == 1 {
 		return true
 	}
 	// or hull can be a linear for
-	// colinear boundaries where self.range.size > 1
-	if self.Geom.Type().IsLineString() {
+	// colinear boundaries where node.range.size > 1
+	if node.Geom.Type().IsLineString() {
 		return true
 	}
 
-	var ai, aj = self.SegmentPoints()
+	var ai, aj = node.SegmentPoints()
 	var bi, bj = other.SegmentPoints()
 
 	var c *geom.Point
@@ -33,7 +33,7 @@ func (self *Node) Collapsible(other *Node) bool {
 	if c.Equals2D(t) {
 		t = bi
 	}
-	if ply, ok := self.Geom.Geometry().(*geom.Polygon); ok {
+	if ply, ok := node.Geom.Geometry().(*geom.Polygon); ok {
 		return !ply.Shell.PointCompletelyInRing(t)
 	}
 	panic("unimplemented : hull type is handled")
